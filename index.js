@@ -1,26 +1,25 @@
-function letterCombinations(digits) {
-  if (digits.length === 0) return [];
-  const map = {
-    2: "abc",
-    3: "def",
-    4: "ghi",
-    5: "jkl",
-    6: "mno",
-    7: "pqrs",
-    8: "tuv",
-    9: "wxyz",
-  };
-  const result = [];
-  backtrack("", 0);
-  return result;
-  function backtrack(current, index) {
-    if (current.length === digits.length) {
-      result.push(current);
-      return;
-    }
-    const letters = map[digits[index]];
-    for (const letter of letters) {
-      backtrack(current + letter, index + 1);
+function numIslands(grid) {
+  if (!grid || grid.length === 0) return 0;
+  const m = grid.length;
+  const n = grid[0].length;
+  let islands = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (grid[i][j] === "1") {
+        islands++;
+        dfs(grid, i, j);
+      }
     }
   }
+  return islands;
+}
+function dfs(grid, i, j) {
+  const m = grid.length;
+  const n = grid[0].length;
+  if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] === "0") return;
+  grid[i][j] = "0";
+  dfs(grid, i + 1, j);
+  dfs(grid, i - 1, j);
+  dfs(grid, i, j + 1);
+  dfs(grid, i, j - 1);
 }
