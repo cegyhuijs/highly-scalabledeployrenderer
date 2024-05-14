@@ -1,20 +1,18 @@
-function calculate(s) {
-  const stack = [];
-  let num = 0;
-  let sign = "+";
-  for (let i = 0; i < s.length; i++) {
-    const char = s[i];
-    if (!isNaN(parseInt(char)) && char !== " ") {
-      num = num * 10 + parseInt(char);
-    }
-    if (isNaN(parseInt(char)) || i === s.length - 1) {
-      if (sign === "+") stack.push(num);
-      else if (sign === "-") stack.push(-num);
-      else if (sign === "*") stack.push(stack.pop() * num);
-      else if (sign === "/") stack.push(parseInt(stack.pop() / num));
-      num = 0;
-      sign = char;
+function detectCycle(head) {
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      let p1 = head;
+      let p2 = slow;
+      while (p1 !== p2) {
+        p1 = p1.next;
+        p2 = p2.next;
+      }
+      return p1;
     }
   }
-  return stack.reduce((acc, val) => acc + val, 0);
+  return null;
 }
